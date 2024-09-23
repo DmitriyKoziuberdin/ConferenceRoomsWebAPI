@@ -8,11 +8,11 @@ namespace ConferenceRoomsWebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class RentController : ControllerBase
+    public class ConferenceRoomController : ControllerBase
     {
         private readonly IConferenceRoomService _conferenceRoom;
 
-        public RentController(IConferenceRoomService conferenceRoom)
+        public ConferenceRoomController(IConferenceRoomService conferenceRoom)
         {
             _conferenceRoom = conferenceRoom;
         }
