@@ -1,6 +1,7 @@
-﻿namespace ConferenceRoomsWebAPI.Interfaces.IRepository
+﻿namespace ConferenceRoomsWebAPI.Interfaces
 {
     public interface ICompanyConferenceServiceRepository
     {
+
     }
 }

@@ -1,4 +1,7 @@
 using ConferenceRoomsWebAPI.ApplicationDb;
+using ConferenceRoomsWebAPI.Interfaces;
+using ConferenceRoomsWebAPI.Repositories;
+using ConferenceRoomsWebAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
 internal class Program
@@ -8,6 +11,12 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+        builder.Services.AddScoped<ICompanyConferenceServiceRepository, CompanyConferenceServiceRepository>();
+        builder.Services.AddScoped<IConferenceRoomRepository, ConferenceRoomRepository>();
+        builder.Services.AddScoped<IBookingService, BookingSerivce>();
+        builder.Services.AddScoped<ICompanyConferenceService, CompanyConferenceService>();
+        builder.Services.AddScoped<IConferenceRoomService, ConferenceRoomService>();
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();

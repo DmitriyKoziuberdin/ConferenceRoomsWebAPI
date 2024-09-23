@@ -1,4 +1,4 @@
-﻿namespace ConferenceRoomsWebAPI.Interfaces.IService
+﻿namespace ConferenceRoomsWebAPI.Interfaces
 {
     public interface ICompanyConferenceService
     {

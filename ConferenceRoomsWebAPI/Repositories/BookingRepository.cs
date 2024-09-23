@@ -1,5 +1,5 @@
 ﻿using ConferenceRoomsWebAPI.ApplicationDb;
-using ConferenceRoomsWebAPI.Interfaces.IRepository;
+using ConferenceRoomsWebAPI.Interfaces;
 
 namespace ConferenceRoomsWebAPI.Repositories
 {

@@ -22,9 +22,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTO\Incoming\" />
-    <Folder Include="DTO\Outcoming\" />
-  </ItemGroup>
-
 </Project>
