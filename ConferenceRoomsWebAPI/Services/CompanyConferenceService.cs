@@ -25,7 +25,7 @@ namespace ConferenceRoomsWebAPI.Services
             if (!isExited)
                 throw new InvalidOperationException();
 
-            var serviceId = await _companyServiceRepository.GetCompanyService(id);
+            var serviceId = await _companyServiceRepository.GetCompanyServiceById(id);
 
             return new CompanyServiceResponse
             {
@@ -75,7 +75,7 @@ namespace ConferenceRoomsWebAPI.Services
             };
 
             await _companyServiceRepository.UpdateCompanyService(newService);
-            CompanyServices companyServiceResponse = await _companyServiceRepository.GetCompanyService(newService.IdService);
+            CompanyServices companyServiceResponse = await _companyServiceRepository.GetCompanyServiceById(newService.IdService);
             return new CompanyServiceResponse
             {
                 IdService = companyServiceResponse.IdService,

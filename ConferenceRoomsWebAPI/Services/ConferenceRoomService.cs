@@ -25,7 +25,7 @@ namespace ConferenceRoomsWebAPI.Services
             if (!isExist)
                 throw new InvalidOperationException();
 
-            var roomId = await _conferenceRoomRepository.GetConferenceRoom(id);
+            var roomId = await _conferenceRoomRepository.GetConferenceRoomId(id);
             var roomResponse = new ConferenceRoomResponse
             {
                 IdRoom = roomId.IdRoom,
@@ -88,7 +88,7 @@ namespace ConferenceRoomsWebAPI.Services
             };
 
             await _conferenceRoomRepository.UpdateConferenceRoom(newRoom);
-            var updatingRoom = await _conferenceRoomRepository.GetConferenceRoom(newRoom.IdRoom);
+            var updatingRoom = await _conferenceRoomRepository.GetConferenceRoomId(newRoom.IdRoom);
             return new ConferenceRoomResponse
             {
                 IdRoom = updatingRoom.IdRoom,

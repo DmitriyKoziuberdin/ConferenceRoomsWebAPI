@@ -19,7 +19,7 @@ namespace ConferenceRoomsWebAPI.Repositories
             return await _context.CompanyServices.ToListAsync();
         }
 
-        public async Task<CompanyServices> GetCompanyService(int id)
+        public async Task<CompanyServices> GetCompanyServiceById(int id)
         {
             return await _context.CompanyServices
                 .FirstAsync(serviceId => serviceId.IdService == id);

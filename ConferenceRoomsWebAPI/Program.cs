@@ -1,4 +1,5 @@
 using ConferenceRoomsWebAPI.ApplicationDb;
+using ConferenceRoomsWebAPI.CachedRepositories;
 using ConferenceRoomsWebAPI.Interfaces;
 using ConferenceRoomsWebAPI.Repositories;
 using ConferenceRoomsWebAPI.Services;
@@ -11,9 +12,12 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        builder.Services.AddScoped<IBookingRepository, BookingRepository>();
-        builder.Services.AddScoped<ICompanyConferenceServiceRepository, CompanyConferenceServiceRepository>();
-        builder.Services.AddScoped<IConferenceRoomRepository, ConferenceRoomRepository>();
+        builder.Services.AddScoped<IBookingRepository, CachedBookingRepository>();
+        builder.Services.AddScoped<BookingRepository>();
+        builder.Services.AddScoped<ICompanyConferenceServiceRepository, CachedCompanyConferenceServiceRepository>();
+        builder.Services.AddScoped<CompanyConferenceServiceRepository>();
+        builder.Services.AddScoped<IConferenceRoomRepository, CachedConferenceRoomRepository>();
+        builder.Services.AddScoped<ConferenceRoomRepository>();
         builder.Services.AddScoped<IBookingService, BookingSerivce>();
         builder.Services.AddScoped<ICompanyConferenceService, CompanyConferenceService>();
         builder.Services.AddScoped<IConferenceRoomService, ConferenceRoomService>();
