@@ -1,10 +1,9 @@
-﻿namespace ConferenceRoomsWebAPI.Entity
+﻿namespace ConferenceRoomsWebAPI.DTO.Outcoming
 {
-    public class CompanyServices
+    public class CompanyServiceForConferenceRoomResponse
     {
         public int IdService { get; set; }
         public string ServiceName { get; set; } = null!;
         public decimal PriceService { get; set; }
-        public List<BookingCompanyService> BookingCompanyServices { get; set; }
     }
 }

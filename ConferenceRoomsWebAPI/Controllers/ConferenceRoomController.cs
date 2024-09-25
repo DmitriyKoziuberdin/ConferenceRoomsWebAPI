@@ -2,6 +2,7 @@ using ConferenceRoomsWebAPI.DTO.Incoming;
 using ConferenceRoomsWebAPI.DTO.Outcoming;
 using ConferenceRoomsWebAPI.Entity;
 using ConferenceRoomsWebAPI.Interfaces;
+using ConferenceRoomsWebAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ConferenceRoomsWebAPI.Controllers
@@ -49,17 +50,30 @@ namespace ConferenceRoomsWebAPI.Controllers
             return Ok();
         }
 
-        //[HttpPost("{clientId:int}/order/{orderId:int}")]
-        //public async Task<IActionResult> CreateClient([FromRoute] int clientId, [FromRoute] int orderId)
-        //{
-        //    await _clientService.AddOrder(clientId, orderId);
-        //    return Ok();
-        //}
+        [HttpPost("{roomId}/services")]
+        public async Task<IActionResult> AddServicesToRoom(int roomId, [FromBody] List<int> serviceId)
+        {
+            if (serviceId == null || serviceId.Count == 0)
+                return BadRequest("The list of services cannot be empty");
+            try
+            {
+                await _conferenceRoom.AddServicesToRoomAsync(roomId, serviceId);
+                return Ok("Services have been successfully added to the room");
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
 
-        //[HttpGet("{clientId:int}/totalOrderPrice")]
-        //public async Task<ClientDto> GetTotalOrderPrice(int clientId)
-        //{
-        //    return await _clientService.GetTotalOrderPrice(clientId);
-        //}
+        [HttpGet("availableRoom")]
+        public async Task<IEnumerable<ConferenceRoomResponse>> GetAvailableRoomsAsync(DateTime date, TimeSpan startTime, TimeSpan endTime, int capacity)
+        {
+            return await _conferenceRoom.GetAvailableRoomsAsync(date, startTime, endTime, capacity);
+        }
     }
 }

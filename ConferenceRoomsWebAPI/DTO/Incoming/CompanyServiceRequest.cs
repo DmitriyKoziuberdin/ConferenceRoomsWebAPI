@@ -3,6 +3,6 @@
     public class CompanyServiceRequest
     {
         public string ServiceName { get; set; } = null!;
-        public double PriceService { get; set; }
+        public decimal PriceService { get; set; }
     }
 }
