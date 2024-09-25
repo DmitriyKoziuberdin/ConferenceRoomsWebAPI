@@ -5,7 +5,7 @@ namespace ConferenceRoomsWebAPI.Interfaces
     public interface ICompanyConferenceServiceRepository
     {
         public Task<List<CompanyServices>> GetAllCompanyServices();
-        public Task<CompanyServices> GetCompanyService(int id);
+        public Task<CompanyServices> GetCompanyServiceById(int id);
         public Task CreateCompanyService(CompanyServices room);
         public Task UpdateCompanyService(CompanyServices room);
         public Task<int> DeleteCompanyServiceById(int id);

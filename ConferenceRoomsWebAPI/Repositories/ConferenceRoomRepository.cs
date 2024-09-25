@@ -26,7 +26,7 @@ namespace ConferenceRoomsWebAPI.Repositories
         //        .FirstAsync(roomId => roomId.IdRoom == id);
         //}
 
-        public async Task<ConferenceRooms> GetConferenceRoom(int id)
+        public async Task<ConferenceRooms> GetConferenceRoomId(int id)
         {
             return await _context.ConferenceRooms
                 .Include(cs => cs.CompanyServices)
