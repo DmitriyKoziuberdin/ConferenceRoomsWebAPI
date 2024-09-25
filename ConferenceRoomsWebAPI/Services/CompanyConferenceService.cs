@@ -7,25 +7,25 @@ namespace ConferenceRoomsWebAPI.Services
 {
     public class CompanyConferenceService : ICompanyConferenceService
     {
-        private readonly ICompanyConferenceServiceRepository _service;
+        private readonly ICompanyConferenceServiceRepository _companyServiceRepository;
 
-        public CompanyConferenceService(ICompanyConferenceServiceRepository service)
+        public CompanyConferenceService(ICompanyConferenceServiceRepository companyServiceRepository)
         {
-            _service = service;
+            _companyServiceRepository = companyServiceRepository;
         }
 
         public async Task<List<CompanyServices>> GetAllCompanyServices()
         {
-            return await _service.GetAllCompanyServices();
+            return await _companyServiceRepository.GetAllCompanyServices();
         }
 
         public async Task<CompanyServiceResponse> GetCompanyServiceId(int id)
         {
-            var isExited = await _service.AnyCompanyServiceId(id);
+            var isExited = await _companyServiceRepository.AnyCompanyServiceId(id);
             if (!isExited)
                 throw new InvalidOperationException();
 
-            var serviceId = await _service.GetCompanyService(id);
+            var serviceId = await _companyServiceRepository.GetCompanyService(id);
 
             return new CompanyServiceResponse
             {
@@ -37,11 +37,11 @@ namespace ConferenceRoomsWebAPI.Services
 
         public async Task CreateCompanyService(CompanyServiceRequest service)
         {
-            var isExited = await _service.AnyCompanyServiceName(service.ServiceName);
+            var isExited = await _companyServiceRepository.AnyCompanyServiceName(service.ServiceName);
             if (isExited)
                 throw new InvalidOperationException();
 
-            await _service.CreateCompanyService(new CompanyServices
+            await _companyServiceRepository.CreateCompanyService(new CompanyServices
             {
                 ServiceName = service.ServiceName,
                 PriceService = service.PriceService
@@ -50,20 +50,20 @@ namespace ConferenceRoomsWebAPI.Services
 
         public async Task DeleteCompanyService(int id)
         {
-            var isExited = await _service.AnyCompanyServiceId(id);
+            var isExited = await _companyServiceRepository.AnyCompanyServiceId(id);
             if (!isExited)
                 throw new InvalidOperationException();
 
-            await _service.DeleteCompanyServiceById(id);
+            await _companyServiceRepository.DeleteCompanyServiceById(id);
         }
 
         public async Task<CompanyServiceResponse> UpdateCompanyService(int roomId, CompanyServiceRequest service)
         {
-            var isExitedId = await _service.AnyCompanyServiceId(roomId);
+            var isExitedId = await _companyServiceRepository.AnyCompanyServiceId(roomId);
             if (!isExitedId)
                 throw new InvalidOperationException();
 
-            var isExitedName = await _service.AnyCompanyServiceName(service.ServiceName);
+            var isExitedName = await _companyServiceRepository.AnyCompanyServiceName(service.ServiceName);
             if (isExitedName)
                 throw new InvalidOperationException();
 
@@ -74,8 +74,8 @@ namespace ConferenceRoomsWebAPI.Services
                 PriceService = service.PriceService
             };
 
-            await _service.UpdateCompanyService(newService);
-            CompanyServices companyServiceResponse = await _service.GetCompanyService(newService.IdService);
+            await _companyServiceRepository.UpdateCompanyService(newService);
+            CompanyServices companyServiceResponse = await _companyServiceRepository.GetCompanyService(newService.IdService);
             return new CompanyServiceResponse
             {
                 IdService = companyServiceResponse.IdService,

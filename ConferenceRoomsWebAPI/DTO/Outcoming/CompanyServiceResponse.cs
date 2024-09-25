@@ -4,6 +4,6 @@
     {
         public int IdService { get; set; }
         public string ServiceName { get; set; } = null!;
-        public double PriceService { get; set; }
+        public decimal PriceService { get; set; }
     }
 }

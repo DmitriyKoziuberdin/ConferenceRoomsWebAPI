@@ -25,6 +25,8 @@ internal class Program
             options.UseNpgsql(builder.Configuration.GetConnectionString("ApplicationDbContext"));
         });
 
+        builder.Services.AddMemoryCache();
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.

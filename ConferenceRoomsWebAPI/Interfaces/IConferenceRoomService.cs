@@ -11,8 +11,7 @@ namespace ConferenceRoomsWebAPI.Interfaces
         public Task CreateConferenceRoom(ConferenceRoomRequest room);
         public Task<ConferenceRoomResponse> UpdateConferenceRoom(int roomId, ConferenceRoomRequest rooms);
         public Task DeleteConfereceRoom(int id);
-
-        //public Task AddOrder(int clientId, int orderId);
-        //public Task<ClientDto> GetTotalOrderPrice(int id);
+        public Task AddServicesToRoomAsync(int roomId, List<int> serviceIds);
+        public Task<IEnumerable<ConferenceRoomResponse>> GetAvailableRoomsAsync(DateTime date, TimeSpan startTime, TimeSpan endTime, int capacity);
     }
 }

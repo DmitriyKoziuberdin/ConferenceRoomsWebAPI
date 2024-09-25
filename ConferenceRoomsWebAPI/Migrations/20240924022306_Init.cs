@@ -57,7 +57,7 @@ namespace ConferenceRoomsWebAPI.Migrations
                     id_service = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     service_name = table.Column<string>(type: "text", nullable: false),
-                    price_service = table.Column<double>(type: "double precision", nullable: false),
+                    price_service = table.Column<decimal>(type: "numeric", nullable: false),
                     conference_rooms_id_room = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>

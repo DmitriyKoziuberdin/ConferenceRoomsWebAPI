@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ConferenceRoomsWebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240921161135_Init")]
+    [Migration("20240924022306_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -95,8 +95,8 @@ namespace ConferenceRoomsWebAPI.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("conference_rooms_id_room");
 
-                    b.Property<double>("PriceService")
-                        .HasColumnType("double precision")
+                    b.Property<decimal>("PriceService")
+                        .HasColumnType("numeric")
                         .HasColumnName("price_service");
 
                     b.Property<string>("ServiceName")

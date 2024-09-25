@@ -92,8 +92,8 @@ namespace ConferenceRoomsWebAPI.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("conference_rooms_id_room");
 
-                    b.Property<double>("PriceService")
-                        .HasColumnType("double precision")
+                    b.Property<decimal>("PriceService")
+                        .HasColumnType("numeric")
                         .HasColumnName("price_service");
 
                     b.Property<string>("ServiceName")
