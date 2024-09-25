@@ -1,4 +1,5 @@
-﻿using ConferenceRoomsWebAPI.DTO.Incoming;
+﻿using Common.Exceptions;
+using ConferenceRoomsWebAPI.DTO.Incoming;
 using ConferenceRoomsWebAPI.DTO.Outcoming;
 using ConferenceRoomsWebAPI.Entity;
 using ConferenceRoomsWebAPI.Interfaces;
@@ -35,7 +36,7 @@ namespace ConferenceRoomsWebAPI.Services
 
             var room = availableRooms.FirstOrDefault(r => r.IdRoom == request.RoomId);
             if (room == null)
-                throw new InvalidOperationException("The room is not available for booking during the hours indicated.");
+                throw new BookingIsNotAvailableException("The room is not available for booking during the hours indicated.");
 
             var bookingCost = await CalculateBookingCostAsync(room, request.StartTime, request.EndTime, request.CompanyServiceIds);
 
@@ -87,10 +88,11 @@ namespace ConferenceRoomsWebAPI.Services
 
         public async Task<BookingResponse> GetBookingByIdAsync(int id)
         {
-            var booking = await _bookingRepository.GetBookingByIdAsync(id);
-            if (booking == null)
-                throw new InvalidOperationException("Бронирование не найдено.");
+            var isExist = await _bookingRepository.AnyBookingByIdAsync(id);
+            if (!isExist)
+                throw new BookingNotFoundException($"Booking with this ID: {id} not found.");
 
+            var booking = await _bookingRepository.GetBookingByIdAsync(id);
             return new BookingResponse
             {
                 IdBooking = booking.IdBooking,

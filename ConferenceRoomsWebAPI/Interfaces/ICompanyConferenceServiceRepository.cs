@@ -4,12 +4,12 @@ namespace ConferenceRoomsWebAPI.Interfaces
 {
     public interface ICompanyConferenceServiceRepository
     {
-        public Task<List<CompanyServices>> GetAllCompanyServices();
-        public Task<CompanyServices> GetCompanyServiceById(int id);
-        public Task CreateCompanyService(CompanyServices room);
-        public Task UpdateCompanyService(CompanyServices room);
-        public Task<int> DeleteCompanyServiceById(int id);
-        public Task<bool> AnyCompanyServiceId(int id);
-        public Task<bool> AnyCompanyServiceName(string name);
+        public Task<List<CompanyServices>> GetAllCompanyServicesAsync();
+        public Task<CompanyServices> GetCompanyServiceByIdAsync(int id);
+        public Task CreateCompanyServiceAsync(CompanyServices room);
+        public Task UpdateCompanyServiceAsync(CompanyServices room);
+        public Task<int> DeleteCompanyServiceByIdAsync(int id);
+        public Task<bool> AnyCompanyServiceIdAsync(int id);
+        public Task<bool> AnyCompanyServiceNameAsync(string name);
     }
 }

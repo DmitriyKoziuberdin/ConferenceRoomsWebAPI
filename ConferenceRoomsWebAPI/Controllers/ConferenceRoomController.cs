@@ -21,32 +21,32 @@ namespace ConferenceRoomsWebAPI.Controllers
         [HttpGet]
         public async Task<List<ConferenceRooms>> GetAllConfereceRooms()
         {
-            return await _conferenceRoom.GetAllConferenceRooms();
+            return await _conferenceRoom.GetAllConferenceRoomsAsync();
         }
 
         [HttpGet("{id:int}")]
         public async Task<ConferenceRoomResponse> GetConfereceRoom([FromRoute] int id)
         {
-            return await _conferenceRoom.GetConferenceRoom(id);
+            return await _conferenceRoom.GetConferenceRoomByIdAsync(id);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateConferenceRoom([FromBody] ConferenceRoomRequest room)
         {
-            await _conferenceRoom.CreateConferenceRoom(room);
+            await _conferenceRoom.CreateConferenceRoomAsync(room);
             return Ok();
         }
 
         [HttpPut("{roomId:int}/")]
         public async Task<ActionResult<ConferenceRoomResponse>> UpdateConferenceRoom([FromRoute] int roomId, [FromBody] ConferenceRoomRequest room)
         {
-            return new OkObjectResult(await _conferenceRoom.UpdateConferenceRoom(roomId, room));
+            return new OkObjectResult(await _conferenceRoom.UpdateConferenceRoomAsync(roomId, room));
         }
 
         [HttpDelete("{roomId:int}")]
         public async Task<IActionResult> DeleteConferenceRoom([FromRoute] int roomId)
         {
-            await _conferenceRoom.DeleteConfereceRoom(roomId);
+            await _conferenceRoom.DeleteConfereceRoomByIdAsync(roomId);
             return Ok();
         }
 

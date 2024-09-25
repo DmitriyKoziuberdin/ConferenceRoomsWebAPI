@@ -17,44 +17,44 @@ namespace ConferenceRoomsWebAPI.CachedRepositories
             _memoryCache = memoryCache;
         }
 
-        public async Task<List<CompanyServices>> GetAllCompanyServices()
+        public async Task<List<CompanyServices>> GetAllCompanyServicesAsync()
         {
             var service = await _memoryCache
-               .GetOrCreateAsync(_cacheKey, (entry) => _companyConferenceServiceRepository.GetAllCompanyServices());
+               .GetOrCreateAsync(_cacheKey, (entry) => _companyConferenceServiceRepository.GetAllCompanyServicesAsync());
             return service!.ToList();
         }
 
-        public async Task<CompanyServices> GetCompanyServiceById(int id)
+        public async Task<CompanyServices> GetCompanyServiceByIdAsync(int id)
         {
-            return await _companyConferenceServiceRepository.GetCompanyServiceById(id);
+            return await _companyConferenceServiceRepository.GetCompanyServiceByIdAsync(id);
         }
 
-        public async Task CreateCompanyService(CompanyServices room)
+        public async Task CreateCompanyServiceAsync(CompanyServices room)
         {
             _memoryCache.Remove(_cacheKey);
-             await _companyConferenceServiceRepository.CreateCompanyService(room);
+             await _companyConferenceServiceRepository.CreateCompanyServiceAsync(room);
         }
 
-        public async Task UpdateCompanyService(CompanyServices room)
+        public async Task UpdateCompanyServiceAsync(CompanyServices room)
         {
             _memoryCache.Remove(_cacheKey);
-            await _companyConferenceServiceRepository.UpdateCompanyService(room);
+            await _companyConferenceServiceRepository.UpdateCompanyServiceAsync(room);
         }
 
-        public async Task<int> DeleteCompanyServiceById(int id)
+        public async Task<int> DeleteCompanyServiceByIdAsync(int id)
         {
             _memoryCache.Remove(_cacheKey);
-            return await _companyConferenceServiceRepository.DeleteCompanyServiceById(id);
+            return await _companyConferenceServiceRepository.DeleteCompanyServiceByIdAsync(id);
         }
 
-        public async Task<bool> AnyCompanyServiceId(int id)
+        public async Task<bool> AnyCompanyServiceIdAsync(int id)
         {
-            return await _companyConferenceServiceRepository.AnyCompanyServiceId(id);
+            return await _companyConferenceServiceRepository.AnyCompanyServiceIdAsync(id);
         }
 
-        public async Task<bool> AnyCompanyServiceName(string name)
+        public async Task<bool> AnyCompanyServiceNameAsync(string name)
         {
-            return await _companyConferenceServiceRepository.AnyCompanyServiceName(name);
+            return await _companyConferenceServiceRepository.AnyCompanyServiceNameAsync(name);
         }
     }
 }

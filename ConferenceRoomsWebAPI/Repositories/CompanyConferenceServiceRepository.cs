@@ -14,24 +14,24 @@ namespace ConferenceRoomsWebAPI.Repositories
             _context = context;
         }
 
-        public async Task<List<CompanyServices>> GetAllCompanyServices()
+        public async Task<List<CompanyServices>> GetAllCompanyServicesAsync()
         {
             return await _context.CompanyServices.ToListAsync();
         }
 
-        public async Task<CompanyServices> GetCompanyServiceById(int id)
+        public async Task<CompanyServices> GetCompanyServiceByIdAsync(int id)
         {
             return await _context.CompanyServices
                 .FirstAsync(serviceId => serviceId.IdService == id);
         }
 
-        public async Task CreateCompanyService(CompanyServices service)
+        public async Task CreateCompanyServiceAsync(CompanyServices service)
         {
             await _context.CompanyServices.AddAsync(service);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteCompanyServiceById(int id)
+        public async Task<int> DeleteCompanyServiceByIdAsync(int id)
         {
             var deletingService = await _context.CompanyServices
                 .Where(serviceId => serviceId.IdService == id)
@@ -40,19 +40,19 @@ namespace ConferenceRoomsWebAPI.Repositories
             return deletingService;
         }
 
-        public async Task UpdateCompanyService(CompanyServices service)
+        public async Task UpdateCompanyServiceAsync(CompanyServices service)
         {
             _context.CompanyServices.Update(service);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> AnyCompanyServiceId(int id)
+        public async Task<bool> AnyCompanyServiceIdAsync(int id)
         {
             return await _context.CompanyServices
                 .AnyAsync(serviceId => serviceId.IdService == id);
         }
 
-        public async Task<bool> AnyCompanyServiceName(string name)
+        public async Task<bool> AnyCompanyServiceNameAsync(string name)
         {
             return await _context.CompanyServices
                 .AnyAsync(serviceName => serviceName.ServiceName == name);

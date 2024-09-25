@@ -32,5 +32,10 @@ namespace ConferenceRoomsWebAPI.CachedRepositories
         {
             return await _bookingRepository.GetServicesByIdsAsync(serviceIds);
         }
+
+        public async Task<bool> AnyBookingByIdAsync(int id)
+        {
+            return await _bookingRepository.AnyBookingByIdAsync(id);
+        }
     }
 }

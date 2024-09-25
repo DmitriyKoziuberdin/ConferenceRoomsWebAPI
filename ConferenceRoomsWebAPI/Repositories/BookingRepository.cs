@@ -36,5 +36,10 @@ namespace ConferenceRoomsWebAPI.Repositories
                 .Where(cs => serviceIds.Contains(cs.IdService))
                 .ToListAsync();
         }
+
+        public async Task<bool> AnyBookingByIdAsync(int id)
+        {
+            return await _context.Bookings.AnyAsync(bookingId => bookingId.IdBooking == id);
+        }
     }
 }

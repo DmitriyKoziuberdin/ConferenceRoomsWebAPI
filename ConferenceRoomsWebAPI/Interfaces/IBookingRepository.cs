@@ -7,5 +7,6 @@ namespace ConferenceRoomsWebAPI.Interfaces
         public Task<Booking> CreateBookingAsync(Booking booking);
         public Task<Booking> GetBookingByIdAsync(int id);
         public Task<IEnumerable<CompanyServices>> GetServicesByIdsAsync(List<int> serviceIds);
+        public Task<bool> AnyBookingByIdAsync(int id);
     }
 }
