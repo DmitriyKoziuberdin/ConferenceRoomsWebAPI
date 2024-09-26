@@ -48,7 +48,7 @@ namespace ConferenceRoomsWebAPI.Controllers
         public async Task<ActionResult<BookingResponse>> GetBookingById([FromRoute]int bookingId)
         {
             var response = await _booking.GetBookingByIdAsync(bookingId);
-            return Ok();
+            return Ok(response);
         }
     }
 }
