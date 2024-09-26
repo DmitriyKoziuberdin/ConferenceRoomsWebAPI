@@ -1,3 +1,4 @@
+using Common.Middleware;
 using ConferenceRoomsWebAPI.ApplicationDb;
 using ConferenceRoomsWebAPI.CachedRepositories;
 using ConferenceRoomsWebAPI.Interfaces;
@@ -43,6 +44,7 @@ internal class Program
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.MapControllers();
+        app.UseMiddleware<ErrorHandlerMiddleware>();
         app.Run();
     }
 }

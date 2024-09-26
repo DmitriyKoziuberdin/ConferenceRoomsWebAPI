@@ -1,4 +1,5 @@
-﻿using ConferenceRoomsWebAPI.DTO.Incoming;
+﻿using Common.Exceptions;
+using ConferenceRoomsWebAPI.DTO.Incoming;
 using ConferenceRoomsWebAPI.DTO.Outcoming;
 using ConferenceRoomsWebAPI.Entity;
 using ConferenceRoomsWebAPI.Interfaces;
@@ -14,18 +15,18 @@ namespace ConferenceRoomsWebAPI.Services
             _conferenceRoomRepository = conferenceRoomRepository;
         }
 
-        public async Task<List<ConferenceRooms>> GetAllConferenceRooms()
+        public async Task<List<ConferenceRooms>> GetAllConferenceRoomsAsync()
         {
-            return await _conferenceRoomRepository.GetAllConferenceRooms();
+            return await _conferenceRoomRepository.GetAllConferenceRoomsAsync();
         }
 
-        public async Task<ConferenceRoomResponse> GetConferenceRoom(int id)
+        public async Task<ConferenceRoomResponse> GetConferenceRoomByIdAsync(int id)
         {
-            var isExist = await _conferenceRoomRepository.AnyConferenceRoomId(id);
+            var isExist = await _conferenceRoomRepository.AnyConferenceRoomIdAsync(id);
             if (!isExist)
-                throw new InvalidOperationException();
+                throw new ConferenceRoomNotFoundException($"Conference room with this ID: {id} not found.");
 
-            var roomId = await _conferenceRoomRepository.GetConferenceRoomId(id);
+            var roomId = await _conferenceRoomRepository.GetConferenceRoomByIdAsync(id);
             var roomResponse = new ConferenceRoomResponse
             {
                 IdRoom = roomId.IdRoom,
@@ -46,13 +47,13 @@ namespace ConferenceRoomsWebAPI.Services
             return roomResponse;
         }
 
-        public async Task CreateConferenceRoom(ConferenceRoomRequest room)
+        public async Task CreateConferenceRoomAsync(ConferenceRoomRequest room)
         {
-            var isExist = await _conferenceRoomRepository.AnyConferenceRoomName(room.NameRoom);
+            var isExist = await _conferenceRoomRepository.AnyConferenceRoomNameAsync(room.NameRoom);
             if (isExist)
-                throw new InvalidOperationException();
+                throw new ConferenceRoomDuplicateNameException($"Conference room with this {room.NameRoom} already use.");
 
-            await _conferenceRoomRepository.CreateConferenceRoom(new ConferenceRooms
+            await _conferenceRoomRepository.CreateConferenceRoomAsync(new ConferenceRooms
             {
                 NameRoom = room.NameRoom,
                 Capacity = room.Capacity,
@@ -60,24 +61,24 @@ namespace ConferenceRoomsWebAPI.Services
             });
         }
 
-        public async Task DeleteConfereceRoom(int id)
+        public async Task DeleteConfereceRoomByIdAsync(int id)
         {
-            var isExist = await _conferenceRoomRepository.AnyConferenceRoomId(id);
+            var isExist = await _conferenceRoomRepository.AnyConferenceRoomIdAsync(id);
             if (!isExist)
-                throw new InvalidOperationException();
+                throw new ConferenceRoomNotFoundException($"Conference room with this ID: {id} not found.");
 
-            await _conferenceRoomRepository.DeleteConferenceRoomById(id);
+            await _conferenceRoomRepository.DeleteConferenceRoomByIdAsync(id);
         }
 
-        public async Task<ConferenceRoomResponse> UpdateConferenceRoom(int roomId, ConferenceRoomRequest room)
+        public async Task<ConferenceRoomResponse> UpdateConferenceRoomAsync(int roomId, ConferenceRoomRequest room)
         {
-            var isExistId = await _conferenceRoomRepository.AnyConferenceRoomId(roomId);
+            var isExistId = await _conferenceRoomRepository.AnyConferenceRoomIdAsync(roomId);
             if (!isExistId)
-                throw new InvalidOperationException();
+                throw new ConferenceRoomNotFoundException($"Conference room with this ID: {roomId} not found.");
 
-            var isExistName = await _conferenceRoomRepository.AnyConferenceRoomName(room.NameRoom);
+            var isExistName = await _conferenceRoomRepository.AnyConferenceRoomNameAsync(room.NameRoom);
             if (isExistName)
-                throw new InvalidOperationException();
+                throw new ConferenceRoomDuplicateNameException($"Conference room with this {room.NameRoom} already use.");
 
             var newRoom = new ConferenceRooms
             {
@@ -87,8 +88,8 @@ namespace ConferenceRoomsWebAPI.Services
                 BasePricePerHour = room.BasePricePerHour,
             };
 
-            await _conferenceRoomRepository.UpdateConferenceRoom(newRoom);
-            var updatingRoom = await _conferenceRoomRepository.GetConferenceRoomId(newRoom.IdRoom);
+            await _conferenceRoomRepository.UpdateConferenceRoomAsync(newRoom);
+            var updatingRoom = await _conferenceRoomRepository.GetConferenceRoomByIdAsync(newRoom.IdRoom);
             return new ConferenceRoomResponse
             {
                 IdRoom = updatingRoom.IdRoom,
@@ -100,11 +101,11 @@ namespace ConferenceRoomsWebAPI.Services
 
         public async Task AddServicesToRoomAsync(int roomId, List<int> serviceIds)
         {
-            var isRoomExist = await _conferenceRoomRepository.AnyConferenceRoomId(roomId);
+            var isRoomExist = await _conferenceRoomRepository.AnyConferenceRoomIdAsync(roomId);
             if (!isRoomExist)
-                throw new InvalidOperationException("Room not found");
+                throw new ConferenceRoomNotFoundException($"Conference room with this ID: {roomId} not found.");
 
-            await _conferenceRoomRepository.AddServicesToRoom(roomId, serviceIds);
+            await _conferenceRoomRepository.AddServicesToRoomAsync(roomId, serviceIds);
         }
 
         public async Task<IEnumerable<ConferenceRoomResponse>> GetAvailableRoomsAsync(DateTime date, TimeSpan startTime, TimeSpan endTime, int capacity)

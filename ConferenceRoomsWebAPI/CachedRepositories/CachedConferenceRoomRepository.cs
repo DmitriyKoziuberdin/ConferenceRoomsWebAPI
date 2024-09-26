@@ -17,51 +17,51 @@ namespace ConferenceRoomsWebAPI.CachedRepositories
             _memoryCache = memoryCache;
         }
 
-        public async Task<List<ConferenceRooms>> GetAllConferenceRooms()
+        public async Task<List<ConferenceRooms>> GetAllConferenceRoomsAsync()
         {
             var room = await _memoryCache
-               .GetOrCreateAsync(_cacheKey, (entry) => _roomRepository.GetAllConferenceRooms());
+               .GetOrCreateAsync(_cacheKey, (entry) => _roomRepository.GetAllConferenceRoomsAsync());
             return room!.ToList();
         }
 
-        public async Task<ConferenceRooms> GetConferenceRoomId(int id)
+        public async Task<ConferenceRooms> GetConferenceRoomByIdAsync(int id)
         {
-            return await _roomRepository.GetConferenceRoomId(id);
+            return await _roomRepository.GetConferenceRoomByIdAsync(id);
         }
 
-        public async Task CreateConferenceRoom(ConferenceRooms room)
+        public async Task CreateConferenceRoomAsync(ConferenceRooms room)
         {
             _memoryCache.Remove(_cacheKey);
-            await _roomRepository.CreateConferenceRoom(room);
+            await _roomRepository.CreateConferenceRoomAsync(room);
         }
 
-        public async Task UpdateConferenceRoom(ConferenceRooms room)
+        public async Task UpdateConferenceRoomAsync(ConferenceRooms room)
         {
             _memoryCache.Remove(_cacheKey);
-            await _roomRepository.UpdateConferenceRoom(room);
+            await _roomRepository.UpdateConferenceRoomAsync(room);
         }
 
-        public async Task<int> DeleteConferenceRoomById(int id)
+        public async Task<int> DeleteConferenceRoomByIdAsync(int id)
         {
             _memoryCache.Remove(_cacheKey);
-            return await _roomRepository.DeleteConferenceRoomById(id);
+            return await _roomRepository.DeleteConferenceRoomByIdAsync(id);
 
         }
 
-        public async Task AddServicesToRoom(int roomId, List<int> serviceId)
+        public async Task AddServicesToRoomAsync(int roomId, List<int> serviceId)
         {
             _memoryCache.Remove(_cacheKey);
-            await _roomRepository.AddServicesToRoom(roomId, serviceId);
+            await _roomRepository.AddServicesToRoomAsync(roomId, serviceId);
         }
 
-        public async Task<bool> AnyConferenceRoomId(int id)
+        public async Task<bool> AnyConferenceRoomIdAsync(int id)
         {
-            return await _roomRepository.AnyConferenceRoomId(id);
+            return await _roomRepository.AnyConferenceRoomIdAsync(id);
         }
 
-        public async Task<bool> AnyConferenceRoomName(string name)
+        public async Task<bool> AnyConferenceRoomNameAsync(string name)
         {
-            return await _roomRepository.AnyConferenceRoomName(name);
+            return await _roomRepository.AnyConferenceRoomNameAsync(name);
         }
 
         public async Task<IEnumerable<ConferenceRooms>> GetAvailableRoomsAsync(DateTime date, TimeSpan startTime, TimeSpan endTime, int capacity)

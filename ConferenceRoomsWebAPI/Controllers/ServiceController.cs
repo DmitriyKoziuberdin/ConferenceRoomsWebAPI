@@ -20,32 +20,32 @@ namespace ConferenceRoomsWebAPI.Controllers
         [HttpGet]
         public async Task<List<CompanyServices>> GetAllCompanyServices()
         {
-            return await _service.GetAllCompanyServices();
+            return await _service.GetAllCompanyServicesAsync();
         }
 
         [HttpGet("{id:int}")]
         public async Task<CompanyServiceResponse> GetCompanyServiceId([FromRoute] int id)
         {
-            return await _service.GetCompanyServiceId(id);
+            return await _service.GetCompanyServiceByIdAsync(id);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateCompanyService([FromBody] CompanyServiceRequest service)
         {
-            await _service.CreateCompanyService(service);
+            await _service.CreateCompanyServiceAsync(service);
             return Ok();
         }
 
         [HttpPut("{serviceId:int}/")]
         public async Task<ActionResult<CompanyServiceResponse>> UpdateCompanyService([FromRoute] int serviceId, [FromBody] CompanyServiceRequest service)
         {
-            return new OkObjectResult(await _service.UpdateCompanyService(serviceId, service));
+            return new OkObjectResult(await _service.UpdateCompanyServiceAsync(serviceId, service));
         }
 
         [HttpDelete("{serviceId:int}")]
         public async Task<IActionResult> DeleteCompanyService([FromRoute] int serviceId)
         {
-            await _service.DeleteCompanyService(serviceId);
+            await _service.DeleteCompanyServiceByIdAsync(serviceId);
             return Ok();
         }
     }

@@ -14,7 +14,7 @@ namespace ConferenceRoomsWebAPI.Repositories
             _context = context;
         }
 
-        public async Task<List<ConferenceRooms>> GetAllConferenceRooms()
+        public async Task<List<ConferenceRooms>> GetAllConferenceRoomsAsync()
         {
             return await _context.ConferenceRooms.ToListAsync();
         }
@@ -26,20 +26,20 @@ namespace ConferenceRoomsWebAPI.Repositories
         //        .FirstAsync(roomId => roomId.IdRoom == id);
         //}
 
-        public async Task<ConferenceRooms> GetConferenceRoomId(int id)
+        public async Task<ConferenceRooms> GetConferenceRoomByIdAsync(int id)
         {
             return await _context.ConferenceRooms
                 .Include(cs => cs.CompanyServices)
                 .FirstAsync(roomId => roomId.IdRoom == id);
         }
 
-        public async Task CreateConferenceRoom(ConferenceRooms room)
+        public async Task CreateConferenceRoomAsync(ConferenceRooms room)
         {
             await _context.ConferenceRooms.AddAsync(room);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteConferenceRoomById(int id)
+        public async Task<int> DeleteConferenceRoomByIdAsync(int id)
         {
             var deletingRoom = await _context.ConferenceRooms
                 .Where(roomId => roomId.IdRoom == id)
@@ -48,13 +48,13 @@ namespace ConferenceRoomsWebAPI.Repositories
             return deletingRoom;
         }
 
-        public async Task UpdateConferenceRoom(ConferenceRooms room)
+        public async Task UpdateConferenceRoomAsync(ConferenceRooms room)
         {
             _context.ConferenceRooms.Update(room);
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddServicesToRoom(int roomId, List<int> serviceId)
+        public async Task AddServicesToRoomAsync(int roomId, List<int> serviceId)
         {
             var room = await _context.ConferenceRooms
                 .Include(r => r.CompanyServices)
@@ -78,38 +78,30 @@ namespace ConferenceRoomsWebAPI.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> AnyConferenceRoomId(int id)
+        public async Task<bool> AnyConferenceRoomIdAsync(int id)
         {
             return await _context.ConferenceRooms
                 .AnyAsync(roomId => roomId.IdRoom == id);
         }
 
-        public async Task<bool> AnyConferenceRoomName(string name)
+        public async Task<bool> AnyConferenceRoomNameAsync(string name)
         {
             return await _context.ConferenceRooms
                 .AnyAsync(roomName => roomName.NameRoom == name);
         }
-
-        //public async Task<IEnumerable<ConferenceRooms>> GetAvailableRoomsAsync(DateTime date, TimeSpan startTime, TimeSpan endTime, int capacity)
-        //{
-        //    return await _context.ConferenceRooms
-        //        .Where(r => r.Capacity >= capacity && !r.Bookings
-        //            .Any(b => b.BookingDate == date && b.StartTime < endTime && b.EndTime > startTime))
-        //        .ToListAsync();
-        //}
 
         public async Task<IEnumerable<ConferenceRooms>> GetBookedRoomsAsync(DateTime date, TimeSpan startTime, TimeSpan endTime)
         {
             return await _context.Bookings
                 .Where(b => b.BookingDate.Date == date.Date &&
                             ((b.StartTime < endTime && b.EndTime > startTime)))
-                .Select(b => b.ConferenceRooms) // Предполагается, что у вас есть навигационное свойство для конференц-зала
+                .Select(b => b.ConferenceRooms)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<ConferenceRooms>> GetAvailableRoomsAsync(DateTime date, TimeSpan startTime, TimeSpan endTime, int capacity)
         {
-            var allRooms = await GetAllConferenceRooms();
+            var allRooms = await GetAllConferenceRoomsAsync();
             var bookedRooms = await GetBookedRoomsAsync(date, startTime, endTime);
 
             return allRooms
